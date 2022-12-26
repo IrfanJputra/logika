@@ -25,8 +25,7 @@ $no=1;
             <th>nama</th>
             <th>alamat</th>
             <th>foto</th>
-            <th>latitude</th>
-            <th>longitude</th>
+            <th>maps</th>
             <th>aksi</th>
         </tr>
 <?php 
@@ -37,8 +36,7 @@ while($data= mysqli_fetch_array($query)){
             <td><?= $data['nama'];?></td>
             <td><?=$data['alamat'];?></td>
             <td><?=$data['foto'];?></td>
-            <td><?=$data['latitude'];?></td>
-            <td><?=$data['longitude'];?></td>
+            <td style="width: 150px; height: 150px;"><iframe src="https://www.google.com/maps?q=<?=$data['latitude'];?>,<?=$data['longitude'];?>&hl=es;z=14&output=embed" frameborder="0"></iframe></td>
             <td>
                 <a href="edit.php?id=<?php echo $data['id'];?>">ubah</a>
                 <a href="del.php?id=<?php echo $data['id'];?>"onclick="return confirm('yakin?');">hapus</a>
