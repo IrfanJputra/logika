@@ -1,5 +1,5 @@
 <?php
-require 'function.php';
+require '../function.php';
 
 // cek apakah tombol submit sudah ditekan atau belum
 if( isset($_POST["submit"]) ) {
@@ -9,14 +9,14 @@ if( isset($_POST["submit"]) ) {
 		echo "
 			<script>
 				alert('data berhasil ditambahkan!');
-				document.location.href = 'index.php';
+				document.location.href = '../index.php';
 			</script>
 		";
 	} else {
 		echo "
 			<script>
 				alert('data gagal ditambahkan!');
-				document.location.href = 'index.php';
+				document.location.href = '../index.php';
 			</script>
 		";
 	}
@@ -33,7 +33,7 @@ if( isset($_POST["submit"]) ) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>add</title>
 </head>
-<body onload="getLocation();">
+<body>
     <form class="myForm" action="" method="post" autocomplete="off">
     <label for="nama">nama</label>
     <input type="text" name="nama" id="nama"><br> <br>
@@ -41,35 +41,19 @@ if( isset($_POST["submit"]) ) {
     <input type="text" name="alamat" id="alamat"><br> <br>
     <label for="foto">foto</label>
     <input type="text" name="foto" id="foto""><br> <br>
-
-	<input type="hidden" name="latitude" value="" >
-	<input type="hidden" name="longitude" value=""> <br>
-    
+    <label for="foto">username</label>
+    <input type="text" name="username" id="""><br> <br>
+    <label for="foto">password</label>
+    <input type="password" name="password" id="""><br> <br>
+    <label for="foto">konfirmasi password</label>
+    <input type="password" name="password2" id="foto""><br> <br>
+    <label for="foto">level</label>
+    <input type="text" name="level" id="foto""><br> <br>
     <button type="submit" name="submit"> ADD</button>
 
 
 
     </form>
 
-	<script type="text/javascript">
-		function getLocation(){
-
-			if(navigator.geolocation){
-				navigator.geolocation.getCurrentPosition(showPosition, showError);
-			}
-		}
-		function showPosition(position){
-			document.querySelector('.myForm input[name = "latitude"]').value = position.coords.latitude;
-			document.querySelector('.myForm input[name = "longitude"]').value = position.coords.longitude;
-		}
-		function showError(error){
-			switch(error.code){
-				case error.PERMISSION_DENIED:
-					alert("Aktifkan Lokasi Terlebih dahulu");
-					location.reload();
-					break;
-			}
-		}
-	</script>
 </body>
 </html>

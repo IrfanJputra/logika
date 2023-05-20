@@ -11,6 +11,7 @@ if( !isset($_SESSION["level"]) ) {
 include 'koneksi.php';
 
 $query = mysqli_query($conn, "SELECT * FROM tb_pegawai");
+$data = mysqli_fetch_array($query);
 $no=1;
 ?>
 
@@ -25,7 +26,7 @@ $no=1;
 <body>
     <br>
     <br>
-    <a href="admin/add.php"><button>tambah data</button></a>
+    <a href="add.php"><button>tambah data</button></a>
     <table border="1"> 
 
         <tr>
@@ -33,9 +34,7 @@ $no=1;
             <th>nama</th>
             <th>alamat</th>
             <th>foto</th>
-            <th>username</th>
-            <th>password</th>
-            <th>level</th>
+            <th>maps</th>
             <th>aksi</th>
         </tr>
 <?php 
@@ -46,9 +45,7 @@ while($data= mysqli_fetch_array($query)){
             <td><?= $data['nama'];?></td>
             <td><?=$data['alamat'];?></td>
             <td><?=$data['foto'];?></td>
-            <td><?=$data['username'];?></td>
-            <td><?=$data['password'];?></td>
-            <td><?=$data['level'];?></td>
+            <td style="width: 150px; height: 150px;"><iframe src="https://www.google.com/maps?q=<?=$data['latitude'];?>,<?=$data['longitude'];?>&hl=es;z=14&output=embed" frameborder="0"></iframe></td>
             <td>
                 <a href="edit.php?id=<?php echo $data['id'];?>">ubah</a>
                 <a href="del.php?id=<?php echo $data['id'];?>"onclick="return confirm('yakin?');">hapus</a>
