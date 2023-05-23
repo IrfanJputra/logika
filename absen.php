@@ -31,6 +31,38 @@ if (!isset($_SESSION["level"])) {
 	header("Location: login.php");
 	exit;
 }
+
+// Fungsi untuk menyimpan waktu terakhir tombol absen ditekan
+function setLastAbsenTime() {
+    $_SESSION['last_absen_time'] = time();
+}
+
+// Fungsi untuk memeriksa apakah tombol absen harus muncul atau tidak
+function isAbsenButtonVisible() {
+    if (!isset($_SESSION['last_absen_time'])) {
+        // Jika belum pernah ditekan sebelumnya, tampilkan tombol absen
+        return true;
+    }
+
+    $lastAbsenTime = $_SESSION['last_absen_time'];
+    $currentTime = time();
+    $elapsedTime = $currentTime - $lastAbsenTime;
+
+    // Jika sudah lebih dari 1 jam (3600 detik), tampilkan tombol absen
+    if ($elapsedTime >= 60) {
+        return true;
+    }
+
+    // Jika belum 1 jam, tombol absen tetap disembunyikan
+    return false;
+}
+
+// Cek apakah tombol absen ditekan
+if (isset($_POST['submit'])) {
+    // Tombol absen ditekan, simpan waktu terakhir tombol absen ditekan
+    setLastAbsenTime();
+}
+
 ?>
 
 <?php
@@ -53,35 +85,19 @@ $data = mysqli_fetch_assoc($result);
 ?>
 <body onload="getLocation();">
 	<h1>SILAHKAN ABSEN</h1>
+	<?php if (isAbsenButtonVisible()): ?>
 	<form class="myForm" action="" method="post" autocomplete="off">
 		<input type="hidden" name="nama" value="<?php echo $data['id_pegawai']; ?>">
 		<input type="hidden" name="tanggal" id="tanggal" value="<?php date_default_timezone_set('Asia/Jakarta'); echo date('d-m-Y H:i:s'); ?>">
 		<input type="hidden" name="status" id="status" value="Sudah">
 		<input type="hidden" name="latitude" value="">
 		<input type="hidden" name="longitude" value="">
-		<?php
-		error_reporting(0); // Untuk menonaktifkan semua pesan error
-		$query = mysqli_query($conn, "SELECT * FROM tb_absen ORDER BY id_absen DESC");
-		if ($query) {
-			$data = mysqli_fetch_assoc($query);
-			$statusAbsensi = $data['status'];
-
-			// Jika absensi sudah selesai, sembunyikan tombol absen
-			if ($statusAbsensi == 'Sudah') {
-				echo "Sudah Absen";
-			} else {
-				echo "<br> <br>";
-				echo "<button type='submit' name='submit'>Absen</button>";
-			}
-		} else {
-			echo "Gagal mengambil data absensi.";
-		}
-
-
-		?>
-
+		<button type='submit' name='submit'>Absen</button>
 	</form>
-
+	<?php else: ?>
+        <p>Tombol absen akan muncul kembali setelah 1 menit.</p>
+    <?php endif; ?>
+	
 	<br>
 	<br>
 	<table border="1">
