@@ -9,9 +9,9 @@ if( isset($_SESSION["login"]) ) {
 require 'koneksi.php';
 
 if( isset($_POST["login"]) ) {
-
 	$username = $_POST["username"];
 	$password = $_POST["password"];
+
 
 	$result = mysqli_query($conn, "SELECT * FROM tb_login WHERE username = '$username'");
     // $data = mysqli_fetch_assoc($result);
@@ -31,10 +31,11 @@ if( isset($_POST["login"]) ) {
 		}else if($row["level"]=='User'){
             // set session
     // $_SESSION["login"] = true;
+    $id = $row['id_pegawai'];
     $_SESSION['username'] = $username;
+    $_SESSION['id_pegawai'] = $id;
     $_SESSION["level"] = 'User';
-
-    header("Location: absen.php");
+        header("Location: absen.php");
      }
         
     }
@@ -97,7 +98,7 @@ if( isset($_POST["login"]) ) {
                     </form>
                     <hr class="mt-4">
                     <div class="col-12">
-                        <p class="text-center mb-0">Belum punya akun? <a href="registrasi.php">Daftar di sini</a></p>
+                        <p class="text-center mb-0">Belum punya akun? <a href="add_user.php">Daftar di sini</a></p>
                     </div>
                 </div>
             </div>

@@ -1,7 +1,6 @@
 <?php 
 require 'function.php';
 require 'koneksi.php';
-
 if( isset($_POST["register"]) ) {
 
 	if( registrasi($_POST) > 0 ) {
@@ -50,7 +49,20 @@ if( isset($_POST["register"]) ) {
           <form method="post" class="mt-5 border p-4 bg-light shadow">
             <h4 class="mb-4">Registrasi Akun</h4>
             <div class="row">
-
+            <div class="mb-3">
+                <select class="form-select" aria-label="Default select example" name="level">
+                  <option disabled selected> Pilih Pegawai </option>
+                      <?php 
+                      include 'koneksi.php';
+                        $result = mysqli_query($conn, "SELECT * FROM tb_pegawai");
+                        while($data= mysqli_fetch_array($result)){
+                        ?>
+                          <option value="<?php echo $data['id_pegawai']; ?>"><?php echo $data['nama']; ?></option>
+                        <?php
+                        }
+                            ?> 
+                </select>
+              </div>
             <div class="mb-3 ">
                 <label>Username<span class="text-danger">*</span></label>
                 <input type="text" name="username" class="form-control" placeholder="Username">

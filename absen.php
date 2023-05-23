@@ -80,14 +80,15 @@ include 'koneksi.php';
 </head>
 
 <?php
-$result = mysqli_query($conn, "SELECT * FROM tb_pegawai");
+$result = mysqli_query($conn, "SELECT * FROM tb_login WHERE id_pegawai");
 $data = mysqli_fetch_assoc($result);
 ?>
 <body onload="getLocation();">
 	<h1>SILAHKAN ABSEN</h1>
 	<?php if (isAbsenButtonVisible()): ?>
 	<form class="myForm" action="" method="post" autocomplete="off">
-		<input type="hidden" name="nama" value="<?php echo $data['id_pegawai']; ?>">
+		<label for=""><?=$_SESSION['username']?></label> <br> <br>
+		<input type="text" name="nama" value="<?=$_SESSION['id_pegawai']?>">
 		<input type="hidden" name="tanggal" id="tanggal" value="<?php date_default_timezone_set('Asia/Jakarta'); echo date('d-m-Y H:i:s'); ?>">
 		<input type="hidden" name="status" id="status" value="Sudah">
 		<input type="hidden" name="latitude" value="">
@@ -95,6 +96,7 @@ $data = mysqli_fetch_assoc($result);
 		<button type='submit' name='submit'>Absen</button>
 	</form>
 	<?php else: ?>
+		<p>anda sudah absen</p>
         <p>Tombol absen akan muncul kembali setelah 1 menit.</p>
     <?php endif; ?>
 	
@@ -104,17 +106,19 @@ $data = mysqli_fetch_assoc($result);
 
 		<tr>
 			<th>no</th>
+			<th>id pegawai</th>
 			<th>tanggal</th>
 			<th>status</th>
 			<th>maps</th>
 		</tr>
 		<?php
 		$no = 1;
-		$data = mysqli_query($conn, "SELECT * FROM tb_absen ORDER BY id_absen DESC");
+		$data = mysqli_query($conn, "SELECT * FROM tb_absen WHERE id_pegawai= '$_SESSION[id_pegawai]' ORDER BY tanggal DESC ");
 		while ($row = mysqli_fetch_assoc($data)) {
 		?>
 			<tr>
 				<td><?= $no++ ?></td>
+				<td><?= $row['id_pegawai']; ?></td>
 				<td><?= $row['tanggal']; ?></td>
 				<td><?= $row['status']; ?></td>
 				<td style="width: 150px; height: 150px;"><iframe src="https://www.google.com/maps?q=<?= $row['latitude']; ?>,<?= $row['longitude']; ?>&hl=es;z=14&output=embed" frameborder="0"></iframe></td>
@@ -122,6 +126,8 @@ $data = mysqli_fetch_assoc($result);
 		<?php }
 		?>
 	</table>
+	<a href="index.php">Home</a>
+	<a href="add_user.php">Tambah User</a>
 	<a href="logout.php">logout</a>
 
 	<script type="text/javascript">

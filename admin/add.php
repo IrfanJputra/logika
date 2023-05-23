@@ -41,14 +41,6 @@ if( isset($_POST["submit"]) ) {
     <input type="text" name="alamat" id="alamat"><br> <br>
     <label for="foto">foto</label>
     <input type="text" name="foto" id="foto""><br> <br>
-    <label for="foto">username</label>
-    <input type="text" name="username" id="""><br> <br>
-    <label for="foto">password</label>
-    <input type="password" name="password" id="""><br> <br>
-    <label for="foto">konfirmasi password</label>
-    <input type="password" name="password2" id="foto""><br> <br>
-    <label for="foto">level</label>
-    <input type="text" name="level" id="foto""><br> <br>
     <button type="submit" name="submit"> ADD</button>
 
 

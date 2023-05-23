@@ -33,9 +33,6 @@ $no=1;
             <th>nama</th>
             <th>alamat</th>
             <th>foto</th>
-            <th>username</th>
-            <th>password</th>
-            <th>level</th>
             <th>aksi</th>
         </tr>
 <?php 
@@ -46,9 +43,6 @@ while($data= mysqli_fetch_array($query)){
             <td><?= $data['nama'];?></td>
             <td><?=$data['alamat'];?></td>
             <td><?=$data['foto'];?></td>
-            <td><?=$data['username'];?></td>
-            <td><?=$data['password'];?></td>
-            <td><?=$data['level'];?></td>
             <td>
                 <a href="edit.php?id=<?php echo $data['id'];?>">ubah</a>
                 <a href="del.php?id=<?php echo $data['id'];?>"onclick="return confirm('yakin?');">hapus</a>
