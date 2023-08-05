@@ -1,9 +1,9 @@
 <?php
-require 'function.php';
+require '../function.php';
 $id = $_GET["id"];
 
 //query data siswa berdasarkan id
-$sqlGet = "SELECT * FROM tb_latihan WHERE id = '$id'";
+$sqlGet = "SELECT * FROM tb_pegawai WHERE id_pegawai = '$id'";
 $queryGet = mysqli_query($conn, $sqlGet);
 $data = mysqli_fetch_array($queryGet);
 // cek apakah tombol submit sudah ditekan atau belum
